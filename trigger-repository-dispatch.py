@@ -74,6 +74,7 @@ URL = 'https://api.github.com/repos/{}/dispatches'.format(ARGS.repo)
 
 # Trigger...
 print(URL)
+print(DATA)
 response = requests.post(URL, headers=HEADERS, json=DATA, timeout=4.0)
 print(response)
 print(response.text)
