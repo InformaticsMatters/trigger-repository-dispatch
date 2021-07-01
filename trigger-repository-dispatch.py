@@ -34,7 +34,7 @@ ARGS = PARSER.parse_args()
 
 # Are GitLab pipeline and tag values present?
 CI_PIPELINE_ID = os.environ.get('CI_PIPELINE_ID')
-CI_COMMIT_TAG = os.environ.get('GI_COMMIT_TAG')
+CI_COMMIT_TAG = os.environ.get('CI_COMMIT_TAG')
 
 # Any variables to process?
 # True if the length of '--vars' is greater than 2
@@ -60,7 +60,7 @@ CLIENT_PAYLOAD = {}
 if CI_PIPELINE_ID:
     CLIENT_PAYLOAD['CI_PIPELINE_ID'] = CI_PIPELINE_ID
 if CI_COMMIT_TAG:
-    CLIENT_PAYLOAD['GI_COMMIT_TAG'] = CI_COMMIT_TAG
+    CLIENT_PAYLOAD['CI_COMMIT_TAG'] = CI_COMMIT_TAG
 # Add any variables
 for VAR in VARS:
     CLIENT_PAYLOAD[VAR] = VARS[VAR]

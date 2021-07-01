@@ -2,8 +2,6 @@
 
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/informaticsmatters/trigger-repository-dispatch)
 
-[![CodeFactor](https://www.codefactor.io/repository/github/informaticsmatters/trigger-repository-dispatch/badge)](https://www.codefactor.io/repository/github/informaticsmatters/trigger-repository-dispatch)
-
 A Python module to simplify creating GitHub repository dispatch events and
 payloads. Used by some of our GitLab repos to trigger builds in GitHub.
 
