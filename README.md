@@ -10,7 +10,7 @@ To use in GitLab CI:
 ```yaml
 variables:
   # The origin of the trigger code
-  TRIGGER_ORIGIN: https://raw.githubusercontent.com/informaticsmatters/trigger-repository-dispatch/2021.1
+  TRIGGER_ORIGIN: https://raw.githubusercontent.com/informaticsmatters/trigger-repository-dispatch/2021.3
 
 trigger:
   stage: trigger
@@ -23,7 +23,23 @@ trigger:
   - curl --location --retry 3 ${TRIGGER_ORIGIN}/trigger-repository-dispatch.py --output trigger-repository-dispatch.py
   - pip install -r trigger-repository-dispatch-requirements.txt
   - chmod +x trigger-repository-dispatch.py
-  - ./trigger-repository-dispatch.py EVENT REPO $TOKEN
+  - ./trigger-repository-dispatch.py ${EVENT} ${REPO} ${TOKEN}
+```
+
+Where: -
+
+- `EVENT` is the [repository dispatch] **type** that is defined in the repository workflow being triggered (e.g. `my-event`)
+- `REPO` is the repository being triggered (e.g. `informaticsmatters/repo-a`)
+- `TOKEN` is a valid [personal access token] for the `REPO`. The token must permit execution of the chosen [repository dispatch] event **type**
+
+And: -
+
+The repository being triggered defines a [repository dispatch] event: -
+
+```
+on:
+  repository_dispatch:
+    types: my-event
 ```
 
 ## Running the trigger locally
@@ -41,6 +57,7 @@ the trigger's requirements: -
 
 Now simulate the GitLab environment variables. You will need to define: -
 
+- `CLIENT_EVENT` (the GitHub repo's [repository dispatch] event type, i.e. "my-event")
 - `CLIENT_REPO` (the GitHub repo you want to trigger, i.e. "informaticsmatters/repo-a")
 - `CLIENT_TOKEN` (a GitHub [personal access token] with access to the "repo" being triggered)
 - `CI_PIPELINE_ID` (A simulated GitLab pipeline ID, any string like "521115318")
@@ -48,6 +65,7 @@ Now simulate the GitLab environment variables. You will need to define: -
 
 For example: -
 
+    export CLIENT_EVENT=my-event
     export CLIENT_REPO=informaticsmatters/repo-a
     export CLIENT_TOKEN=000000000
     export CI_PIPELINE_ID=521115318
@@ -55,8 +73,9 @@ For example: -
 
 With these environment variables set you just need to run the trigger...
 
-    ./trigger-repository-dispatch.py dm-api ${CLIENT_REPO} ${CLIENT_TOKEN}
+    ./trigger-repository-dispatch.py ${CLIENT_EVENT} ${CLIENT_REPO} ${CLIENT_TOKEN}
 
 ---
 
+[repository dispatch]: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#repository_dispatch
 [personal access token]: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
