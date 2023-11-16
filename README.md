@@ -55,21 +55,25 @@ the trigger's requirements: -
     source venv/bin/activate
     pip install -r requirements.txt
 
-Now simulate the GitLab environment variables. You will need to define: -
+Now simulate the GitLab environment variables that the tool relies on. You will need to define: -
 
-- `CLIENT_EVENT` (the GitHub repo's [repository dispatch] event type, i.e. "my-event")
-- `CLIENT_REPO` (the GitHub repo you want to trigger, i.e. "informaticsmatters/repo-a")
-- `CLIENT_TOKEN` (a GitHub [personal access token] with access to the "repo" being triggered)
 - `CI_PIPELINE_ID` (A simulated GitLab pipeline ID, any string like "521115318")
 - `CI_COMMIT_TAG` (The tag of the origin repo you want to simulate, i.e."1.0.0")
 
+And then the details of the [repository dispatch] defined in the client repo: -
+
+- `CLIENT_EVENT`
+- `CLIENT_REPO`
+- `CLIENT_TOKEN`
+
 For example: -
 
-    export CLIENT_EVENT=my-event
-    export CLIENT_REPO=informaticsmatters/repo-a
-    export CLIENT_TOKEN=000000000
     export CI_PIPELINE_ID=521115318
     export CI_COMMIT_TAG=1.0.0
+    
+    CLIENT_EVENT=my-event
+    CLIENT_REPO=informaticsmatters/repo-a
+    CLIENT_TOKEN=000000000
 
 With these environment variables set you just need to run the trigger...
 
